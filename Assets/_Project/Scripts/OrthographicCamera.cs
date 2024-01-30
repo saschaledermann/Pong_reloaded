@@ -27,8 +27,11 @@ public class OrthographicCamera : MonoBehaviour
 
         foreach (var col in FindObjectsOfType<Collider2D>())
         {
+            if (col.CompareTag("Top Goal") || col.CompareTag("Bottom Goal")) continue;
             bounds.Encapsulate(col.bounds);
         }
+
+        bounds.Expand(-1);
 
         var vertical = bounds.size.y;
         var horizontal = bounds.size.x * m_camera.pixelHeight / m_camera.pixelWidth;
