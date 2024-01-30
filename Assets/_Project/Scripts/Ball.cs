@@ -1,14 +1,12 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
-
-public class TopGoalScored : UnityEvent {}
-public class BottomGoalScored : UnityEvent {}
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(TrailRenderer))]
 public class Ball : MonoBehaviour
 {
-    public TopGoalScored topGoalScored;
-    public BottomGoalScored bottomGoalScored;
+    public Action topGoalScored;
+    public Action bottomGoalScored;
 
     [SerializeField] float m_movementSpeed;
     [SerializeField] float m_speedIncrement;
@@ -16,15 +14,20 @@ public class Ball : MonoBehaviour
 
     int m_numberOfPaddleBounces = 0;
     Rigidbody2D m_rigidbody;
+    TrailRenderer m_trailrenderer;
 
-    void Awake() => m_rigidbody = GetComponent<Rigidbody2D>();
+    void Awake()
+    {
+        m_rigidbody = GetComponent<Rigidbody2D>();
+        m_trailrenderer = GetComponent<TrailRenderer>();
+    }
 
     void Start()
     {
-        MoveBall(new Vector2(Random.Range(0.5f, -0.5f), 1));
+        MoveBall(new Vector2(UnityEngine.Random.Range(0.5f, -0.5f), 1));
     }
 
-    void MoveBall(Vector2 dir)
+    public void MoveBall(Vector2 dir)
     {
         dir = dir.normalized;
 
@@ -47,6 +50,8 @@ public class Ball : MonoBehaviour
     {
         m_rigidbody.velocity = Vector2.zero;
         transform.position = Vector2.zero;
+        m_numberOfPaddleBounces = 0;
+        m_trailrenderer.Clear();
     }
 
     void OnCollisionEnter2D(Collision2D col)
