@@ -11,6 +11,7 @@ public class Ball : MonoBehaviour
     [SerializeField] float m_movementSpeed;
     [SerializeField] float m_speedIncrement;
     [SerializeField] float m_maxSpeedIncrement;
+    [SerializeField] AudioClip m_hitClip;
 
     int m_numberOfPaddleBounces = 0;
     Rigidbody2D m_rigidbody;
@@ -54,10 +55,24 @@ public class Ball : MonoBehaviour
         m_trailrenderer.Clear();
     }
 
+    void PlayAudioClip(bool paddleHit = false)
+    {
+        if (m_hitClip == null || AudioManager.Instance == null) return;
+
+        AudioManager.Instance.PlayClip(transform.position, m_hitClip, paddleHit ? 0.8f : 0.5f, paddleHit);
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (!col.collider.CompareTag("Paddle")) return;
-        PaddleCollision2D(col);
+        if (col.collider.CompareTag("Paddle"))
+        {
+            PaddleCollision2D(col);
+            PlayAudioClip(true);
+        }
+        else
+        {
+            PlayAudioClip();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
