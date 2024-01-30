@@ -1,12 +1,19 @@
-using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
+
+public class TopGoalScored : UnityEvent {}
+public class BottomGoalScored : UnityEvent {}
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Ball : MonoBehaviour
 {
+    public TopGoalScored topGoalScored;
+    public BottomGoalScored bottomGoalScored;
+
     [SerializeField] float m_movementSpeed;
     [SerializeField] float m_speedIncrement;
     [SerializeField] float m_maxSpeedIncrement;
+
     int m_numberOfPaddleBounces = 0;
     Rigidbody2D m_rigidbody;
 
@@ -36,9 +43,29 @@ public class Ball : MonoBehaviour
         MoveBall(new Vector2(x, y));
     }
 
+    void Reset()
+    {
+        m_rigidbody.velocity = Vector2.zero;
+        transform.position = Vector2.zero;
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (!col.collider.CompareTag("Paddle")) return;
         PaddleCollision2D(col);
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Top Goal"))
+        {
+            topGoalScored?.Invoke();
+            Reset();
+        }
+        else if (col.CompareTag("Bottom Goal"))
+        {
+            bottomGoalScored?.Invoke();
+            Reset();
+        }
     }
 }
