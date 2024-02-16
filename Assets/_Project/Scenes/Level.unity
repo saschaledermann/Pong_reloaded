@@ -541,8 +541,8 @@ GameObject:
   - component: {fileID: 188676488}
   - component: {fileID: 188676489}
   - component: {fileID: 188676490}
-  - component: {fileID: 188676491}
   - component: {fileID: 188676492}
+  - component: {fileID: 188676491}
   - component: {fileID: 188676493}
   m_Layer: 0
   m_Name: Top_Paddle
@@ -715,6 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77a73bb6abc3924e82d6a2e90756bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foresight: 0.5
 --- !u!1 &302734891
 GameObject:
   m_ObjectHideFlags: 0
