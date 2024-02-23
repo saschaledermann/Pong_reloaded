@@ -20,7 +20,6 @@ public class ComputerInput : MonoBehaviour, IPaddleInput
 
         if (xDistance > 0.5f && yDistance < (7 * foresight)) m_move = true;
         if (xDistance < 0.1f || yDistance > (7 * foresight)) m_move = false;
-        Debug.Log($"{yDistance}, {m_move}");
 
         if (m_move)
             m_input.x = m_ball.transform.position.x > transform.position.x ? 1f : -1f;

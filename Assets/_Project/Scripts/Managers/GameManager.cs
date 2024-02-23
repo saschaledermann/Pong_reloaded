@@ -1,10 +1,12 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
     public Action topGoalScored;
     public Action bottomGoalScored;
+    public Action restartGame;
 
     public bool Paused { get; set; }
     public bool Stopped { get; set; }
@@ -41,13 +43,31 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Space) && m_ball != null)
         {
-            m_ball.MoveBall(new Vector2(UnityEngine.Random.Range(0.5f, -0.5f), 1));
+            StartBall();
         }
+    }
+
+    async void StartBall()
+    {
+        if (m_ball == null) return;
+
+        m_ball.Reset();
+
+        await Task.Delay(1000);
+
+        m_ball.MoveBall(new Vector2(UnityEngine.Random.Range(0.5f, -0.5f), 1));
+        Stopped = false;
     }
 
     public void TogglePause()
     {
         Paused = !Paused;
         Time.timeScale = Paused ? 0f : 1f;
+    }
+
+    public void RestartGame()
+    {
+        restartGame.Invoke();
+        StartBall();
     }
 }

@@ -14,6 +14,14 @@ public class Paddle : MonoBehaviour
         m_inputController = GetComponent<IPaddleInput>();
     }
 
+    void Start()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.restartGame += () => transform.position = new Vector2(0, transform.position.y);
+        }
+    }
+
     void FixedUpdate()
     {
         m_rigidbody.velocity = m_inputController.GetInput() * m_speed;

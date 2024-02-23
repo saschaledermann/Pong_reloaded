@@ -26,6 +26,10 @@ public class Ball : MonoBehaviour
     void Start()
     {
         MoveBall(new Vector2(UnityEngine.Random.Range(0.5f, -0.5f), 1));
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.restartGame += () => Reset();
+        }
     }
 
     public void MoveBall(Vector2 dir)
@@ -47,7 +51,7 @@ public class Ball : MonoBehaviour
         MoveBall(new Vector2(x, y));
     }
 
-    void Reset()
+    public void Reset()
     {
         m_rigidbody.velocity = Vector2.zero;
         transform.position = Vector2.zero;

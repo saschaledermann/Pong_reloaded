@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelPanel : Panel
@@ -13,6 +14,11 @@ public class LevelPanel : Panel
             if (canvasController == null) return;
             canvasController.OpenPanel<MainPanel>(this, new Vector2(1350, -325));
         });
+
+        foreach (var button in m_levelButtons)
+        {
+            button.onClick.AddListener(() => SceneManager.LoadScene(1));
+        }
     }
     
     public override void SetInteractables(bool state)
