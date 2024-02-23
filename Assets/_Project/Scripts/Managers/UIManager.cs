@@ -1,9 +1,12 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public Action<bool> gameOver;
+
     [Header("Score objects")]
     [SerializeField] TMP_Text m_topScoreText;
     [SerializeField] TMP_Text m_bottomScoreText;
@@ -20,7 +23,8 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.topGoalScored += TopGoalScored;
             GameManager.Instance.bottomGoalScored += BottomGoalScored;
             GameManager.Instance.restartGame += ResetScore;
-            
+            gameOver += GameManager.Instance.gameOver;
+
             m_pauseButton.onClick.AddListener(() =>
             {
                 GameManager.Instance.TogglePause();
@@ -35,12 +39,18 @@ public class UIManager : MonoBehaviour
     {
         m_topScore++;
         m_topScoreText.text = m_topScore.ToString();
+        
+        if (m_topScore >= 5)
+            gameOver?.Invoke(false);
     }
 
     void TopGoalScored()
     {
         m_bottomScore++;
         m_bottomScoreText.text = m_bottomScore.ToString();
+        
+        if (m_bottomScore >= 5)
+            gameOver?.Invoke(true);
     }
 
     void ResetScore()

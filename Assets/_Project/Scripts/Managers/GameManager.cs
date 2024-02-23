@@ -7,6 +7,7 @@ public class GameManager : MonoSingleton<GameManager>
     public Action topGoalScored;
     public Action bottomGoalScored;
     public Action restartGame;
+    public Action<bool> gameOver;
 
     public bool Paused { get; set; }
     public bool Stopped { get; set; }
