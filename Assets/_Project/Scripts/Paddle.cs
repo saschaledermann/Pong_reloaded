@@ -5,6 +5,20 @@ using UnityEngine;
 public class Paddle : MonoBehaviour
 {
     [SerializeField] PaddleSettings m_paddleSettings;
+    public PaddleSettings PaddleSettings
+    {
+        get
+        {
+            if (m_paddleSettings == null)
+                m_paddleSettings = ScriptableObject.CreateInstance<PaddleSettings>();
+            return m_paddleSettings;
+        }
+        set
+        {
+            m_paddleSettings = value;
+            m_inputController.PaddleSettings = value;
+        }
+    }
     Rigidbody2D m_rigidbody;
     IPaddleInput m_inputController;
 
@@ -17,7 +31,7 @@ public class Paddle : MonoBehaviour
     void Start()
     {
         if (m_paddleSettings != null && m_inputController != null)
-            m_inputController.PaddleSettings = m_paddleSettings;
+            m_inputController.PaddleSettings = PaddleSettings;
         
         if (GameManager.Instance != null)
             GameManager.Instance.restartGame += () => transform.position = new Vector2(0, transform.position.y);

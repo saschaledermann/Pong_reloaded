@@ -2086,6 +2086,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67abfa471d546541a63718e9e03cf98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_paddleSettings:
+  - {fileID: 11400000, guid: 1864d7752eb5819418cdb6d2e296921f, type: 2}
+  - {fileID: 11400000, guid: 53b40275c7012e24ba733ac112f35d42, type: 2}
+  - {fileID: 11400000, guid: d481b54e09603794884c60817b1be588, type: 2}
+  - {fileID: 11400000, guid: 4e14bab64de9c2845a4d94cc290b9ce3, type: 2}
+  - {fileID: 11400000, guid: ce5c7904ed2b3324e86cb5e14719fe1c, type: 2}
+  - {fileID: 11400000, guid: b8ae95a80bc6baf47b552df87cd206de, type: 2}
+  - {fileID: 11400000, guid: b91aa964b9eadf04d9728442e6e6f7f6, type: 2}
+  - {fileID: 11400000, guid: e13b192b3f80a874c871e19c3f4c8d8d, type: 2}
+  - {fileID: 11400000, guid: 826bf12774b7e104595dab5946ac2eff, type: 2}
   m_levelButtons:
   - {fileID: 2095007376}
   - {fileID: 1484853983}
@@ -6127,6 +6137,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1983861252}
   m_CullTransparentMesh: 1
+--- !u!1 &2028197097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2028197099}
+  - component: {fileID: 2028197098}
+  m_Layer: 0
+  m_Name: Settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2028197098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028197097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a62866ffd1ce68419e1460f14aae65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opponentSettings: {fileID: 0}
+--- !u!4 &2028197099
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028197097}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2038327076
 GameObject:
   m_ObjectHideFlags: 0
@@ -6914,3 +6969,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1525614249}
   - {fileID: 1376025738}
+  - {fileID: 2028197099}

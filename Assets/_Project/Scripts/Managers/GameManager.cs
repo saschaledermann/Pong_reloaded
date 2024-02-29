@@ -12,6 +12,8 @@ public class GameManager : MonoSingleton<GameManager>
     public bool Paused { get; set; }
     public bool Stopped { get; set; }
 
+    [SerializeField] Paddle m_opponent;
+
     Ball m_ball;
     bool m_playerScored;
 
@@ -71,5 +73,11 @@ public class GameManager : MonoSingleton<GameManager>
     {
         restartGame.Invoke();
         StartBall();
+    }
+
+    public void SetOpponentSettings(PaddleSettings settings)
+    {
+        if (m_opponent != null)
+            m_opponent.PaddleSettings = settings;
     }
 }

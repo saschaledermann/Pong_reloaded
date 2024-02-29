@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class LevelPanel : Panel
 {
+    [SerializeField] PaddleSettings[] m_paddleSettings;
     [SerializeField] Button[] m_levelButtons;
     [SerializeField] Button m_backButton;
 
@@ -15,9 +16,15 @@ public class LevelPanel : Panel
             canvasController.OpenPanel<MainPanel>(this, new Vector2(1350, -325));
         });
 
-        foreach (var button in m_levelButtons)
+        for (var i = 0; i < m_levelButtons.Length; i++)
         {
-            button.onClick.AddListener(() => SceneManager.LoadScene(1));
+            var index = i;
+            m_levelButtons[i].onClick.AddListener(() => 
+            {
+                if (SettingsManager.Instance != null)
+                    SettingsManager.Instance.opponentSettings = m_paddleSettings[index];
+                SceneManager.LoadScene(1);
+            });
         }
     }
     
