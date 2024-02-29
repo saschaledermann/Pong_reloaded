@@ -13,6 +13,7 @@ public class GameManager : MonoSingleton<GameManager>
     public bool Stopped { get; set; }
 
     Ball m_ball;
+    bool m_playerScored;
 
     protected override void Awake()
     {
@@ -29,34 +30,34 @@ public class GameManager : MonoSingleton<GameManager>
             m_ball.topGoalScored += () =>
             {
                 Stopped = true;
+                m_playerScored = false;
                 topGoalScored?.Invoke();
+                StartBall(1);
             };
 
             m_ball.bottomGoalScored += () =>
             {
                 Stopped = true;
+                m_playerScored = true;
                 bottomGoalScored?.Invoke();
+                StartBall(1);
             };
         }
+
+        m_playerScored = UnityEngine.Random.Range(0, 2) == 1;
+        StartBall();
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && m_ball != null)
-        {
-            StartBall();
-        }
-    }
-
-    async void StartBall()
+    async void StartBall(int delay = 1)
     {
         if (m_ball == null) return;
 
         m_ball.Reset();
 
-        await Task.Delay(1000);
+        delay *= 1000;
+        await Task.Delay(delay);
 
-        m_ball.MoveBall(new Vector2(UnityEngine.Random.Range(0.5f, -0.5f), 1));
+        m_ball.MoveBall(new Vector2(UnityEngine.Random.Range(0.5f, -0.5f), m_playerScored ? -1 : 1));
         Stopped = false;
     }
 
