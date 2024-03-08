@@ -21,6 +21,9 @@ public class Paddle : MonoBehaviour
     }
     Rigidbody2D m_rigidbody;
     IPaddleInput m_inputController;
+    public bool HasEffect { get; set; }
+    float m_effectDuration = 1.5f;
+    float m_effectTime = 0f;
 
     void Awake()
     {
@@ -37,5 +40,25 @@ public class Paddle : MonoBehaviour
             GameManager.Instance.restartGame += () => transform.position = new Vector2(0, transform.position.y);
     }
 
-    void FixedUpdate() => m_rigidbody.velocity = m_inputController.GetInput();
+    void FixedUpdate()
+    {
+        var velocity = m_inputController.GetInput();
+        if (HasEffect)
+        {
+            velocity *= 0.5f;
+            m_effectTime += Time.fixedDeltaTime;
+            if (m_effectTime >= m_effectDuration)
+            {
+                HasEffect = false;
+                m_effectTime = 0;
+            }
+        }
+        m_rigidbody.velocity = velocity;
+    }
+
+    public bool IsBoostShot(out Boost boost)
+    {
+        boost = PaddleSettings.Boost;
+        return m_inputController.DoBoostShot;
+    }
 }

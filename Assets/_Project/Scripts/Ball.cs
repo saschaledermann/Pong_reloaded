@@ -16,6 +16,8 @@ public class Ball : MonoBehaviour
     int m_numberOfPaddleBounces = 0;
     Rigidbody2D m_rigidbody;
     TrailRenderer m_trailrenderer;
+    int m_speedBoost = 1;
+    Boost m_boost = Boost.None;
 
     void Awake()
     {
@@ -36,23 +38,79 @@ public class Ball : MonoBehaviour
     {
         dir = dir.normalized;
 
-        var speed = m_movementSpeed + Mathf.Clamp(m_numberOfPaddleBounces * m_speedIncrement, 0f, m_maxSpeedIncrement);
+        var speed = (m_movementSpeed + Mathf.Clamp(m_numberOfPaddleBounces * m_speedIncrement, 0f, m_maxSpeedIncrement)) * m_speedBoost;
         m_rigidbody.velocity = dir * speed;
     }
 
     void PaddleCollision2D(Collision2D col)
     {
-        var pos = transform.position;
+        var paddle = col.gameObject.GetComponent<Paddle>();
+        ApplyBoost(paddle);
+        GetBoost(paddle);
+
         var paddlePos = col.transform.position;
-        var paddleWidth = col.collider.bounds.size.x;
-        var x = (pos.x - paddlePos.x) / paddleWidth;
-        var y = paddlePos.y > 0 ? -1 : 1;
+        float x;
+        float y = paddlePos.y > 0 ? -1 : 1;
+
+        if (m_boost == Boost.Angle)
+            x = UnityEngine.Random.Range(0, 2) == 1 ? 1 : -1;
+        else
+        {
+            var pos = transform.position;
+            var paddleWidth = col.collider.bounds.size.x;
+            x = (pos.x - paddlePos.x) / paddleWidth;
+        }
         m_numberOfPaddleBounces++;
         MoveBall(new Vector2(x, y));
     }
 
+    void ApplyBoost(Paddle paddle)
+    {
+        switch (m_boost)
+        {
+            case Boost.None:
+                break;
+            case Boost.Angle:
+                break;
+            case Boost.Stun:
+                paddle.HasEffect = true;
+                break;
+            case Boost.Power:
+                m_speedBoost = 1;
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+
+        m_boost = Boost.None;
+    }
+
+    void GetBoost(Paddle paddle)
+    {
+        if (paddle.IsBoostShot(out m_boost))
+        {
+            switch (m_boost)
+            {
+                case Boost.None:
+                    break;
+                case Boost.Angle:
+                    break;
+                case Boost.Stun:
+                    break;
+                case Boost.Power:
+                    m_speedBoost = 2;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            Debug.Log("Boost shot!");
+        }
+    }
+
     public void Reset()
     {
+        m_boost = Boost.None;
+        m_speedBoost = 1;
         m_rigidbody.velocity = Vector2.zero;
         transform.position = Vector2.zero;
         m_numberOfPaddleBounces = 0;

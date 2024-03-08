@@ -7,6 +7,16 @@ public class ComputerInput : MonoBehaviour, IPaddleInput
     bool m_move;
     PaddleSettings m_paddleSettings;
     public PaddleSettings PaddleSettings { get => m_paddleSettings; set => m_paddleSettings = value; }
+    int m_bounceCounter;
+    public bool DoBoostShot 
+    { 
+        get
+        {
+            m_bounceCounter++;
+            return m_bounceCounter % 5 == 4;
+        }
+    }
+            
 
     void Start() => m_ball = FindObjectOfType<Ball>();
 
