@@ -1,8 +1,11 @@
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SettingsManager : PersistentMonoSingleton<SettingsManager>
 {
     public PaddleSettings opponentSettings;
+    [SerializeField] PaddleSettings m_playerSettings;
+    public PaddleSettings PlayerSettings { get => m_playerSettings; }
 
     protected override void Awake()
     {
@@ -11,7 +14,7 @@ public class SettingsManager : PersistentMonoSingleton<SettingsManager>
         SceneManager.activeSceneChanged += (_, scene) => 
         {
             if (scene.name == "Level" && opponentSettings != null && GameManager.Instance != null)
-                GameManager.Instance.SetOpponentSettings(opponentSettings);
+                GameManager.Instance.SetPaddleSettings(opponentSettings, m_playerSettings);
         };
     }
 }

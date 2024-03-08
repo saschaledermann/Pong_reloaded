@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 3
   m_foresight: 0
-  m_boost: 3
+  m_boost: 0

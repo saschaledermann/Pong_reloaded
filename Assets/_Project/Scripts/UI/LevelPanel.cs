@@ -10,6 +10,12 @@ public class LevelPanel : Panel
 
     void Start()
     {
+        int level;
+        if (PlayerPrefs.HasKey("Level"))
+            level = PlayerPrefs.GetInt("Level");
+        else
+            level = 1;
+
         m_backButton.onClick.AddListener(() =>
         {
             if (canvasController == null) return;
@@ -25,13 +31,20 @@ public class LevelPanel : Panel
                     SettingsManager.Instance.opponentSettings = m_paddleSettings[index];
                 SceneManager.LoadScene(1);
             });
+            m_levelButtons[i].interactable = i < level;
         }
     }
     
     public override void SetInteractables(bool state)
     {
-        foreach (var button in m_levelButtons)
-            button.interactable = state;
+        int level;
+        if (PlayerPrefs.HasKey("Level"))
+            level = PlayerPrefs.GetInt("Level");
+        else
+            level = 1;
+        
+        for (int i = 0; i < level; i++)
+            m_levelButtons[i].interactable = state;
         
         m_backButton.interactable = state;
     }

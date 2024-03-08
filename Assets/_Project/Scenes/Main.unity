@@ -6167,6 +6167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   opponentSettings: {fileID: 0}
+  m_playerSettings: {fileID: 11400000, guid: 065bedf0987ff3c46989420e97f478c0, type: 2}
 --- !u!4 &2028197099
 Transform:
   m_ObjectHideFlags: 0
