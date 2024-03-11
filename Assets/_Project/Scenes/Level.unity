@@ -3334,6 +3334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_opponent: {fileID: 188676491}
+  m_player: {fileID: 502722122}
 --- !u!4 &1239885253
 Transform:
   m_ObjectHideFlags: 0

@@ -11,8 +11,8 @@ public class CustomizationPanel : Panel
     void Start()
     {
         int boosters;
-        if (PlayerPrefs.HasKey("boosters"))
-            boosters = PlayerPrefs.GetInt("boosters");
+        if (PlayerPrefs.HasKey("Boosters"))
+            boosters = PlayerPrefs.GetInt("Boosters");
         else
             boosters = 0;
 
@@ -22,7 +22,7 @@ public class CustomizationPanel : Panel
             canvasController.OpenPanel<MainPanel>(this, new Vector2(1350, -325));
         });
 
-        m_powerUpToggle1.isOn = false;
+        m_powerUpToggle1.isOn = SettingsManager.Instance.PlayerSettings.Boost == Boost.Angle;
         m_powerUpToggle1.onValueChanged.AddListener(value =>
         {
             if (value)
@@ -32,7 +32,7 @@ public class CustomizationPanel : Panel
         });
         m_powerUpToggle1.interactable = boosters > 0;
 
-        m_powerUpToggle2.isOn = false;
+        m_powerUpToggle2.isOn = SettingsManager.Instance.PlayerSettings.Boost == Boost.Stun;
         m_powerUpToggle2.onValueChanged.AddListener(value =>
         {
             if (value)
@@ -42,7 +42,7 @@ public class CustomizationPanel : Panel
         });
         m_powerUpToggle2.interactable = boosters > 1;
 
-        m_powerUpToggle3.isOn = false;
+        m_powerUpToggle3.isOn = SettingsManager.Instance.PlayerSettings.Boost == Boost.Power;
         m_powerUpToggle3.onValueChanged.AddListener(value =>
         {
             if (value)
@@ -57,8 +57,8 @@ public class CustomizationPanel : Panel
     public override void SetInteractables(bool state)
     {
         int boosters;
-        if (PlayerPrefs.HasKey("boosters"))
-            boosters = PlayerPrefs.GetInt("boosters");
+        if (PlayerPrefs.HasKey("Boosters"))
+            boosters = PlayerPrefs.GetInt("Boosters");
         else
             boosters = 0;
         

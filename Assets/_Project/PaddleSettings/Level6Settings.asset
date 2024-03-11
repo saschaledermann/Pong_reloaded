@@ -15,3 +15,5 @@ MonoBehaviour:
   m_speed: 3
   m_foresight: 1
   m_boost: 2
+  m_unlockString: Stun boost
+  m_unlockNumber: 2

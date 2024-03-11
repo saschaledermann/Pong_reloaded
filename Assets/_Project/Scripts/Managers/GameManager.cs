@@ -47,6 +47,7 @@ public class GameManager : MonoSingleton<GameManager>
             };
         }
 
+        Time.timeScale = 1f;
         m_playerScored = UnityEngine.Random.Range(0, 2) == 1;
         StartBall();
     }

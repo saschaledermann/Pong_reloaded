@@ -9,4 +9,8 @@ public class PaddleSettings : ScriptableObject
     public float Foresight { get => m_foresight; }
     [SerializeField] Boost m_boost = Boost.None;
     public Boost Boost { get => m_boost; set => m_boost = value; }
+    [SerializeField] string m_unlockString;
+    public string UnlockString { get => m_unlockString; }
+    [SerializeField] int m_unlockNumber;
+    public int UnlockNumber { get => m_unlockNumber; }
 }

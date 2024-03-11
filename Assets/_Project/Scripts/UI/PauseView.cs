@@ -39,7 +39,7 @@ public class PauseView : MonoBehaviour
             m_quitButton.onClick.AddListener(() => 
             {
                 GameManager.Instance.TogglePause();
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene("Main");
             });
         }
     }

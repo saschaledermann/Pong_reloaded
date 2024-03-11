@@ -25,9 +25,13 @@ public class EndGameView : MonoBehaviour
 
         m_title.text = "-";
         m_subTitle.text = string.Empty;
-        UnlockString = string.Empty;
+        UnlockString = SettingsManager.Instance.OpponentSettings.UnlockString;
 
-        m_nextLevelButton.interactable = false;
+        m_nextLevelButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("Level");
+        });
+        m_nextLevelButton.interactable = SettingsManager.Instance.Level < 9;
 
         m_restartButton.onClick.AddListener(async () =>
         {
@@ -49,7 +53,27 @@ public class EndGameView : MonoBehaviour
     public async void EndGame(bool playerWon)
     {
         m_title.text = playerWon ? "You won!" : "You lost!";
-        m_subTitle.text = string.IsNullOrEmpty(UnlockString) ? $"{UnlockString} unlocked!" : string.Empty;
+        if (PlayerPrefs.GetInt("Boosters") < SettingsManager.Instance.OpponentSettings.UnlockNumber &&
+            !string.IsNullOrEmpty(UnlockString))
+        {
+            m_subTitle.text = $"{UnlockString} unlocked!";
+            var boosterIndex = PlayerPrefs.GetInt("Boosters") + 1;
+            PlayerPrefs.SetInt("Boosters", boosterIndex);
+        }
+        else
+        {
+            m_subTitle.text = string.Empty;
+        }
+
+        if (playerWon)
+        {
+            if (SettingsManager.Instance.Level < 9)
+                SettingsManager.Instance.Level++;
+            var level = SettingsManager.Instance.Level;
+            if (level > PlayerPrefs.GetInt("Level"))
+                PlayerPrefs.SetInt("Level", level);
+        }
+
         m_nextLevelButton.gameObject.SetActive(playerWon);
         m_restartButton.gameObject.SetActive(!playerWon);
 
@@ -86,7 +110,7 @@ public class EndGameView : MonoBehaviour
 
     void SetInteractables(bool value)
     {
-        // m_nextLevelButton.interactable = value;
+        m_nextLevelButton.interactable = value;
         m_restartButton.interactable = value;
         m_quitButton.interactable = value;
     }

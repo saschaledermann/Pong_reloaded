@@ -1,10 +1,10 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelPanel : Panel
 {
-    [SerializeField] PaddleSettings[] m_paddleSettings;
     [SerializeField] Button[] m_levelButtons;
     [SerializeField] Button m_backButton;
 
@@ -24,12 +24,12 @@ public class LevelPanel : Panel
 
         for (var i = 0; i < m_levelButtons.Length; i++)
         {
-            var index = i;
+            var index = i+1;
             m_levelButtons[i].onClick.AddListener(() => 
             {
-                if (SettingsManager.Instance != null)
-                    SettingsManager.Instance.opponentSettings = m_paddleSettings[index];
-                SceneManager.LoadScene(1);
+                Debug.Log($"Setting Level to: {index}");
+                SettingsManager.Instance.Level = index;
+                SceneManager.LoadScene("Level");
             });
             m_levelButtons[i].interactable = i < level;
         }
