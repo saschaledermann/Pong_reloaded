@@ -29,9 +29,7 @@ public class Ball : MonoBehaviour
     {
         MoveBall(new Vector2(UnityEngine.Random.Range(0.5f, -0.5f), 1));
         if (GameManager.Instance != null)
-        {
             GameManager.Instance.restartGame += () => Reset();
-        }
     }
 
     public void MoveBall(Vector2 dir)
@@ -66,6 +64,9 @@ public class Ball : MonoBehaviour
 
     void ApplyBoost(Paddle paddle)
     {
+        if (paddle.HasEffect) 
+            paddle.HasEffect = false;
+
         switch (m_boost)
         {
             case Boost.None:
@@ -87,8 +88,9 @@ public class Ball : MonoBehaviour
 
     void GetBoost(Paddle paddle)
     {
-        if (paddle.IsBoostShot(out m_boost))
+        if (paddle.IsBoostShot(out var boost))
         {
+            m_boost = boost;
             switch (m_boost)
             {
                 case Boost.None:
@@ -140,14 +142,10 @@ public class Ball : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Top Goal"))
-        {
             topGoalScored?.Invoke();
-            Reset();
-        }
         else if (col.CompareTag("Bottom Goal"))
-        {
             bottomGoalScored?.Invoke();
-            Reset();
-        }
+        
+        Reset();
     }
 }

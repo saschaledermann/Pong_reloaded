@@ -22,8 +22,6 @@ public class Paddle : MonoBehaviour
     Rigidbody2D m_rigidbody;
     IPaddleInput m_inputController;
     public bool HasEffect { get; set; }
-    float m_effectDuration = 1.5f;
-    float m_effectTime = 0f;
 
     void Awake()
     {
@@ -35,25 +33,50 @@ public class Paddle : MonoBehaviour
     {
         if (m_paddleSettings != null && m_inputController != null)
             m_inputController.PaddleSettings = PaddleSettings;
-        
+
         if (GameManager.Instance != null)
-            GameManager.Instance.restartGame += () => transform.position = new Vector2(0, transform.position.y);
+        {
+            GameManager.Instance.restartGame += Reset;
+            GameManager.Instance.bottomGoalScored += Reset;
+            GameManager.Instance.topGoalScored += Reset;
+            Debug.Log("Event registered.");
+        }
+    }
+
+    void OnEnable()
+    {
+        // if (GameManager.Instance != null)
+        // {
+        //     GameManager.Instance.restartGame += Reset;
+        //     GameManager.Instance.bottomGoalScored += Reset;
+        //     GameManager.Instance.topGoalScored += Reset;
+        //     Debug.Log("Event registered.");
+        // }
+    }
+
+    void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.restartGame -= Reset;
+            GameManager.Instance.bottomGoalScored -= Reset;
+            GameManager.Instance.topGoalScored -= Reset;
+        }
     }
 
     void FixedUpdate()
     {
         var velocity = m_inputController.GetInput();
         if (HasEffect)
-        {
-            velocity *= 0.5f;
-            m_effectTime += Time.fixedDeltaTime;
-            if (m_effectTime >= m_effectDuration)
-            {
-                HasEffect = false;
-                m_effectTime = 0;
-            }
-        }
+            velocity *= 0.33f;
+
         m_rigidbody.velocity = velocity;
+    }
+
+    void Reset()
+    {
+        HasEffect = false;
+        transform.position = new Vector2(0, transform.position.y);
     }
 
     public bool IsBoostShot(out Boost boost)

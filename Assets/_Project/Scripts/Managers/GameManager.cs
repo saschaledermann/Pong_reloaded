@@ -35,7 +35,7 @@ public class GameManager : MonoSingleton<GameManager>
                 Stopped = true;
                 m_playerScored = false;
                 topGoalScored?.Invoke();
-                StartBall(1);
+                StartBall();
             };
 
             m_ball.bottomGoalScored += () =>
@@ -43,7 +43,7 @@ public class GameManager : MonoSingleton<GameManager>
                 Stopped = true;
                 m_playerScored = true;
                 bottomGoalScored?.Invoke();
-                StartBall(1);
+                StartBall();
             };
         }
 
