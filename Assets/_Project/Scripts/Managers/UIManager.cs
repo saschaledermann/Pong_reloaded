@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TMP_Text m_bottomScoreText;
     [SerializeField] Button m_pauseButton;
     [SerializeField] PauseView m_pauseView;
+    [SerializeField] Toggle m_audioToggle;
     int m_topScore;
     int m_bottomScore;
 
@@ -33,6 +34,13 @@ public class UIManager : MonoBehaviour
                 m_pauseButton.interactable = false;
             });
         }
+
+        m_audioToggle.onValueChanged.AddListener(value => 
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.ToggleAudio(value);
+        });
+        m_audioToggle.isOn = PlayerPrefs.GetInt("Audio") == 1;
     }
 
     void BottomGoalScored()

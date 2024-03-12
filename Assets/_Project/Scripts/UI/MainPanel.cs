@@ -7,6 +7,7 @@ public class MainPanel : Panel
     [SerializeField] Button m_customiseButton;
     [SerializeField] Button m_quitButton;
     [SerializeField] Button m_aboutButton;
+    [SerializeField] Toggle m_audioToggle;
 
     void Start()
     {
@@ -15,6 +16,13 @@ public class MainPanel : Panel
         m_customiseButton.onClick.AddListener(() => OpenPanel<CustomizationPanel>());
         m_quitButton.onClick.AddListener(() => Quit());
         m_aboutButton.onClick.AddListener(() => OpenPanel<AboutPanel>());
+
+        m_audioToggle.onValueChanged.AddListener(value => 
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.ToggleAudio(value);
+        });
+        m_audioToggle.isOn = PlayerPrefs.GetInt("Audio") == 1;
     }
 
 

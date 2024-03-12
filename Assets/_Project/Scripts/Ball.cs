@@ -105,7 +105,6 @@ public class Ball : MonoBehaviour
                 default:
                     throw new NotImplementedException();
             }
-            Debug.Log("Boost shot!");
         }
     }
 

@@ -39,19 +39,7 @@ public class Paddle : MonoBehaviour
             GameManager.Instance.restartGame += Reset;
             GameManager.Instance.bottomGoalScored += Reset;
             GameManager.Instance.topGoalScored += Reset;
-            Debug.Log("Event registered.");
         }
-    }
-
-    void OnEnable()
-    {
-        // if (GameManager.Instance != null)
-        // {
-        //     GameManager.Instance.restartGame += Reset;
-        //     GameManager.Instance.bottomGoalScored += Reset;
-        //     GameManager.Instance.topGoalScored += Reset;
-        //     Debug.Log("Event registered.");
-        // }
     }
 
     void OnDisable()
