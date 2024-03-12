@@ -45,6 +45,7 @@ public class Ball : MonoBehaviour
         var paddle = col.gameObject.GetComponent<Paddle>();
         ApplyBoost(paddle);
         GetBoost(paddle);
+        PlayAudioClip(true, paddle.IsBoostShot(out var boost) && boost != Boost.None);
 
         var paddlePos = col.transform.position;
         float x;
@@ -96,10 +97,13 @@ public class Ball : MonoBehaviour
                 case Boost.None:
                     break;
                 case Boost.Angle:
+                    paddle.DoParticles();
                     break;
                 case Boost.Stun:
+                    paddle.DoParticles();
                     break;
                 case Boost.Power:
+                    paddle.DoParticles();
                     m_speedBoost = 2;
                     break;
                 default:
@@ -118,11 +122,14 @@ public class Ball : MonoBehaviour
         m_trailrenderer.Clear();
     }
 
-    void PlayAudioClip(bool paddleHit = false)
+    void PlayAudioClip(bool paddleHit = false, bool boost = false)
     {
         if (m_hitClip == null || AudioManager.Instance == null) return;
 
-        AudioManager.Instance.PlayClip(transform.position, m_hitClip, paddleHit ? 0.8f : 0.5f, paddleHit);
+        if (boost)
+            AudioManager.Instance.PlayClip(transform.position, m_hitClip, 1.25f, paddleHit);
+        else
+            AudioManager.Instance.PlayClip(transform.position, m_hitClip, paddleHit ? 0.8f : 0.5f, paddleHit);
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -130,7 +137,6 @@ public class Ball : MonoBehaviour
         if (col.collider.CompareTag("Paddle"))
         {
             PaddleCollision2D(col);
-            PlayAudioClip(true);
         }
         else
         {

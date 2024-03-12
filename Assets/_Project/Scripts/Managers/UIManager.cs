@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     [Header("Score objects")]
     [SerializeField] TMP_Text m_topScoreText;
     [SerializeField] TMP_Text m_bottomScoreText;
-    [SerializeField] Button m_pauseButton;
+    [SerializeField] Toggle m_pauseToggle;
     [SerializeField] PauseView m_pauseView;
     [SerializeField] Toggle m_audioToggle;
     int m_topScore;
@@ -26,12 +26,11 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.restartGame += ResetScore;
             gameOver += GameManager.Instance.gameOver;
 
-            m_pauseButton.onClick.AddListener(() =>
+            m_pauseToggle.onValueChanged.AddListener(value =>
             {
-                GameManager.Instance.TogglePause();
-                m_pauseButton.transform.GetChild(0).GetComponent<TMP_Text>().text = GameManager.Instance.Paused ? "|>" : "||";
+                GameManager.Instance.TogglePause(value);
                 m_pauseView.TogglePause();
-                m_pauseButton.interactable = false;
+                m_pauseToggle.interactable = false;
             });
         }
 

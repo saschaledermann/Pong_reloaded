@@ -70,6 +70,12 @@ public class GameManager : MonoSingleton<GameManager>
         Paused = !Paused;
         Time.timeScale = Paused ? 0f : 1f;
     }
+    
+    public void TogglePause(bool value)
+    {
+        Paused = value;
+        Time.timeScale = Paused ? 0f : 1f;
+    }
 
     public void RestartGame()
     {

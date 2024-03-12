@@ -15,3 +15,5 @@ MonoBehaviour:
   m_speed: 3
   m_foresight: 0
   m_boost: 0
+  m_unlockString: 
+  m_unlockNumber: 0

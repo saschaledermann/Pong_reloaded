@@ -5,6 +5,7 @@ using UnityEngine;
 public class Paddle : MonoBehaviour
 {
     [SerializeField] PaddleSettings m_paddleSettings;
+    [SerializeField] ParticleSystem m_particleSystem;
     public PaddleSettings PaddleSettings
     {
         get
@@ -71,5 +72,11 @@ public class Paddle : MonoBehaviour
     {
         boost = PaddleSettings.Boost;
         return m_inputController.DoBoostShot;
+    }
+
+    public void DoParticles()
+    {
+        if (m_particleSystem == null) return;
+        m_particleSystem.Play();
     }
 }
