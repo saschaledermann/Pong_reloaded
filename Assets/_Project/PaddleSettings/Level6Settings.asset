@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c98b28f6701a9d429a97ac6e2a53172, type: 3}
   m_Name: Level6Settings
   m_EditorClassIdentifier: 
-  m_speed: 3
-  m_foresight: 1
+  m_speed: 30
+  m_foresight: 0.75
   m_boost: 2
   m_unlockString: Stun boost
   m_unlockNumber: 2

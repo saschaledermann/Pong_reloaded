@@ -24,12 +24,10 @@ public class PauseView : MonoBehaviour
                 m_pauseToggle.interactable = true;
             });
         
-            m_restartButton.onClick.AddListener(async () => 
+            m_restartButton.onClick.AddListener(() => 
             {
-                await MoveView(false);
                 GameManager.Instance.RestartGame();
-                GameManager.Instance.TogglePause();
-                m_pauseToggle.interactable = true;
+                m_pauseToggle.isOn = false;
             });
             
             m_quitButton.onClick.AddListener(() => 
@@ -38,6 +36,24 @@ public class PauseView : MonoBehaviour
                 SceneManager.LoadScene("Main");
             });
         }
+
+        m_resumeButton.onClick.AddListener(() =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
+        });
+
+        m_restartButton.onClick.AddListener(() =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
+        });
+
+        m_quitButton.onClick.AddListener(() =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
+        });
     }
 
     public void TogglePause()

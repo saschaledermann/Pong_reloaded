@@ -7,6 +7,7 @@ public class AudioManager : PersistentMonoSingleton<AudioManager>
     [SerializeField] AudioClip m_mainMenuMusic;
     [SerializeField] AudioClip m_levelMusic;
     [SerializeField] AudioClip m_bossMusic;
+    [SerializeField] AudioClip m_uiClip;
     AudioSource m_backgroundMusicSource;
     List<AudioSource> m_audioSources = new();
     public bool Paused { get; private set; }
@@ -39,7 +40,7 @@ public class AudioManager : PersistentMonoSingleton<AudioManager>
         };
     }
 
-    public void PlayClip(Vector3 position, AudioClip clip, float pitch = 1f, bool variablePitch = false)
+    public void PlayClip(Vector3 position, AudioClip clip, float volume = 1f, float pitch = 1f, bool variablePitch = false)
     {
         if (Paused) return;
 
@@ -50,6 +51,7 @@ public class AudioManager : PersistentMonoSingleton<AudioManager>
         var source = clipGO.AddComponent<AudioSource>();
         source.loop = false;
         source.clip = clip;
+        source.volume = volume;
         source.pitch = variablePitch ? pitch + Random.Range(-0.1f, 0.1f) : pitch;
         source.Play();
         m_audioSources.Add(source);
@@ -62,7 +64,7 @@ public class AudioManager : PersistentMonoSingleton<AudioManager>
         if (Paused) return;
 
         var clipGO = new GameObject("AudioClip");
-        clipGO.transform.position = Vector3.zero;
+        clipGO.transform.position = Vector2.zero;
         clipGO.transform.parent = transform;
 
         var source = clipGO.AddComponent<AudioSource>();
@@ -76,18 +78,20 @@ public class AudioManager : PersistentMonoSingleton<AudioManager>
         Destroy(clipGO, clip.length + 0.25f);
     }
 
+    public void PlayUiClip() => PlayClip(transform.position, m_uiClip, 0.65f, 0.65f, true);
+
     void StartBackgroundMusic(AudioClip clip)
     {
         if (m_backgroundMusicSource == null)
             SetupMusicGameObject();
         m_backgroundMusicSource.clip = clip;
         m_backgroundMusicSource.loop = true;
-        m_backgroundMusicSource.volume = Paused ? 0f : 0.15f;
+        m_backgroundMusicSource.volume = Paused ? 0f : 0.5f;
         m_backgroundMusicSource.Play();
         m_audioSources.Add(m_backgroundMusicSource);
     }
 
-    private void SetupMusicGameObject()
+    void SetupMusicGameObject()
     {
         var go = new GameObject("BackgroundMusic");
         m_backgroundMusicSource = go.AddComponent<AudioSource>();
@@ -104,6 +108,6 @@ public class AudioManager : PersistentMonoSingleton<AudioManager>
             source.volume = value ? 0f : 1f;
 
         if (m_backgroundMusicSource != null)
-            m_backgroundMusicSource.volume = value ? 0f : 0.15f;
+            m_backgroundMusicSource.volume = value ? 0f : 0.5f;
     }
 }

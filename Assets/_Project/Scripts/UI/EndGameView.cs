@@ -32,6 +32,11 @@ public class EndGameView : MonoBehaviour
             SceneManager.LoadScene("Level");
         });
         m_nextLevelButton.interactable = SettingsManager.Instance.Level < 9;
+        m_nextLevelButton.onClick.AddListener(() =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
+        });
 
         m_restartButton.onClick.AddListener(async () =>
         {
@@ -42,11 +47,21 @@ public class EndGameView : MonoBehaviour
             m_pauseButton.transform.GetChild(0).GetComponent<TMP_Text>().text = GameManager.Instance.Paused ? "|>" : "||";
             m_pauseButton.interactable = true;
         });
+        m_restartButton.onClick.AddListener(() =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
+        });
 
         m_quitButton.onClick.AddListener(() =>
         {
             GameManager.Instance.TogglePause();
             SceneManager.LoadScene(0);
+        });
+        m_quitButton.onClick.AddListener(() =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
         });
     }
 

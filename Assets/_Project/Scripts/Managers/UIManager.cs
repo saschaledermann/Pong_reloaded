@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
             {
                 GameManager.Instance.TogglePause(value);
                 m_pauseView.TogglePause();
-                m_pauseToggle.interactable = false;
+                m_pauseToggle.interactable = !value;
             });
         }
 
@@ -43,6 +43,17 @@ public class UIManager : MonoBehaviour
         {
             if (AudioManager.Instance != null)
                 AudioManager.Instance.ToggleAudio(value);
+        });
+
+        m_pauseToggle.onValueChanged.AddListener(_ =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
+        });
+        m_audioToggle.onValueChanged.AddListener(_ =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
         });
     }
 

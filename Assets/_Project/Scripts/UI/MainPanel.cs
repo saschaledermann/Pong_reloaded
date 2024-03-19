@@ -13,9 +13,24 @@ public class MainPanel : Panel
     {
         // Add button callbacks
         m_startButton.onClick.AddListener(() => OpenPanel<LevelPanel>());
+        m_startButton.onClick.AddListener(() =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
+        });
         m_customiseButton.onClick.AddListener(() => OpenPanel<CustomizationPanel>());
+        m_customiseButton.onClick.AddListener(() =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
+        });
         m_quitButton.onClick.AddListener(() => Quit());
         m_aboutButton.onClick.AddListener(() => OpenPanel<AboutPanel>());
+        m_aboutButton.onClick.AddListener(() =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
+        });
 
         if (AudioManager.Instance != null)
             m_audioToggle.isOn = AudioManager.Instance.Paused;
@@ -26,6 +41,11 @@ public class MainPanel : Panel
         {
             if (AudioManager.Instance != null)
                 AudioManager.Instance.ToggleAudio(value);
+        });
+        m_audioToggle.onValueChanged.AddListener(_ =>
+        {
+            if (AudioManager.Instance == null) return;
+            AudioManager.Instance.PlayUiClip();
         });
     }
 

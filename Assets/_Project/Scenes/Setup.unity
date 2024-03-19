@@ -210,6 +210,7 @@ MonoBehaviour:
   m_mainMenuMusic: {fileID: 8300000, guid: fbe9210a7ae704045ba8fb7d77d7042f, type: 3}
   m_levelMusic: {fileID: 8300000, guid: d2085a27429a49d4895d542fe2e82ce3, type: 3}
   m_bossMusic: {fileID: 8300000, guid: 40a58e68221c87c4892bdce5ad76b0a7, type: 3}
+  m_uiClip: {fileID: 8300000, guid: 42704b472b1d7ee488a5bfe6205cd96a, type: 3}
 --- !u!4 &1118882987
 Transform:
   m_ObjectHideFlags: 0

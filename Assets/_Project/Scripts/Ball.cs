@@ -128,9 +128,9 @@ public class Ball : MonoBehaviour
         if (m_hitClip == null || AudioManager.Instance == null) return;
 
         if (boost)
-            AudioManager.Instance.PlayClip(transform.position, m_hitClip, 1.25f, paddleHit);
+            AudioManager.Instance.PlayClip(transform.position, m_hitClip, 1f, 1.25f, paddleHit);
         else
-            AudioManager.Instance.PlayClip(transform.position, m_hitClip, paddleHit ? 0.8f : 0.5f, paddleHit);
+            AudioManager.Instance.PlayClip(transform.position, m_hitClip, 1f, paddleHit ? 0.8f : 0.5f, paddleHit);
     }
 
     void OnCollisionEnter2D(Collision2D col)
