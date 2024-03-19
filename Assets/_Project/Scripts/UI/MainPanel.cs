@@ -17,12 +17,16 @@ public class MainPanel : Panel
         m_quitButton.onClick.AddListener(() => Quit());
         m_aboutButton.onClick.AddListener(() => OpenPanel<AboutPanel>());
 
+        if (AudioManager.Instance != null)
+            m_audioToggle.isOn = AudioManager.Instance.Paused;
+        else
+            m_audioToggle.interactable = false;
+        
         m_audioToggle.onValueChanged.AddListener(value => 
         {
             if (AudioManager.Instance != null)
                 AudioManager.Instance.ToggleAudio(value);
         });
-        m_audioToggle.isOn = PlayerPrefs.GetInt("Audio") == 1;
     }
 
 

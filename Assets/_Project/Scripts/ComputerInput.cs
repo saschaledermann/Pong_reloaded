@@ -26,8 +26,8 @@ public class ComputerInput : MonoBehaviour, IPaddleInput
         var yDistance = Mathf.Abs(m_ball.transform.position.y - transform.position.y);
         var xDistance = Mathf.Abs(m_ball.transform.position.x - transform.position.x);
 
-        if (xDistance > 0.5f && yDistance < (7 * PaddleSettings.Foresight)) m_move = true;
-        if (xDistance < 0.1f || yDistance > (7 * PaddleSettings.Foresight)) m_move = false;
+        if (xDistance > 0.5f && yDistance < (70 * PaddleSettings.Foresight)) m_move = true;
+        if (xDistance < 0.1f || yDistance > (70 * PaddleSettings.Foresight)) m_move = false;
 
         if (m_move)
             m_input.x = m_ball.transform.position.x > transform.position.x ? 1f : -1f;

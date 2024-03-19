@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -97,13 +98,13 @@ public class Ball : MonoBehaviour
                 case Boost.None:
                     break;
                 case Boost.Angle:
-                    paddle.DoParticles();
+                    paddle.DoBoostParticles();
                     break;
                 case Boost.Stun:
-                    paddle.DoParticles();
+                    paddle.DoBoostParticles();
                     break;
                 case Boost.Power:
-                    paddle.DoParticles();
+                    paddle.DoBoostParticles();
                     m_speedBoost = 2;
                     break;
                 default:
@@ -135,13 +136,9 @@ public class Ball : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.CompareTag("Paddle"))
-        {
             PaddleCollision2D(col);
-        }
         else
-        {
             PlayAudioClip();
-        }
     }
 
     void OnTriggerEnter2D(Collider2D col)

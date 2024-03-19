@@ -14,7 +14,7 @@ public class EndGameView : MonoBehaviour
     [SerializeField] Button m_quitButton;
     [SerializeField] Button m_pauseButton;
     Vector2 m_onPosition = Vector2.zero;
-    Vector2 m_offPosition = new(0, 1600);
+    Vector2 m_offPosition = new(0, 2500);
 
     void Start()
     {
@@ -52,26 +52,30 @@ public class EndGameView : MonoBehaviour
 
     public async void EndGame(bool playerWon)
     {
-        m_title.text = playerWon ? "You won!" : "You lost!";
-        if (PlayerPrefs.GetInt("Boosters") < SettingsManager.Instance.OpponentSettings.UnlockNumber &&
-            !string.IsNullOrEmpty(UnlockString))
-        {
-            m_subTitle.text = $"{UnlockString} unlocked!";
-            var boosterIndex = PlayerPrefs.GetInt("Boosters") + 1;
-            PlayerPrefs.SetInt("Boosters", boosterIndex);
-        }
-        else
-        {
-            m_subTitle.text = string.Empty;
-        }
+        m_subTitle.text = string.Empty;
 
         if (playerWon)
         {
+            m_title.text = "You won!";
+
+            if (PlayerPrefs.GetInt("Boosters") < SettingsManager.Instance.OpponentSettings.UnlockNumber &&
+                !string.IsNullOrEmpty(UnlockString))
+            {
+                m_subTitle.text = $"{UnlockString} unlocked!";
+                var boosterIndex = PlayerPrefs.GetInt("Boosters") + 1;
+                PlayerPrefs.SetInt("Boosters", boosterIndex);
+            }
+
             if (SettingsManager.Instance.Level < 9)
                 SettingsManager.Instance.Level++;
+
             var level = SettingsManager.Instance.Level;
             if (level > PlayerPrefs.GetInt("Level"))
                 PlayerPrefs.SetInt("Level", level);
+        }
+        else
+        {
+            m_title.text = "You lost!";
         }
 
         m_nextLevelButton.gameObject.SetActive(playerWon);

@@ -10,7 +10,7 @@ public class PauseView : MonoBehaviour
     [SerializeField] Button m_quitButton;
     [SerializeField] Toggle m_pauseToggle;
     Vector2 m_onPosition = Vector2.zero;
-    Vector2 m_offPosition = new(0, 1600);
+    Vector2 m_offPosition = new(0, 2500);
 
     void Start()
     {

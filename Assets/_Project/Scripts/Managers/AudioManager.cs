@@ -15,7 +15,10 @@ public class AudioManager : PersistentMonoSingleton<AudioManager>
     {
         base.Awake();
 
-        Paused = false;
+        if (PlayerPrefs.HasKey("Audio"))
+            Paused = PlayerPrefs.GetInt("Audio") == 0;
+        else
+            Paused = false;
 
         SceneManager.activeSceneChanged += (_, scene) =>
         {
@@ -79,7 +82,7 @@ public class AudioManager : PersistentMonoSingleton<AudioManager>
             SetupMusicGameObject();
         m_backgroundMusicSource.clip = clip;
         m_backgroundMusicSource.loop = true;
-        m_backgroundMusicSource.volume = 0.15f;
+        m_backgroundMusicSource.volume = Paused ? 0f : 0.15f;
         m_backgroundMusicSource.Play();
         m_audioSources.Add(m_backgroundMusicSource);
     }
@@ -93,14 +96,14 @@ public class AudioManager : PersistentMonoSingleton<AudioManager>
     public void ToggleAudio(bool value)
     {
         Paused = value;
-        PlayerPrefs.SetInt("Audio", value ? 1 : 0);
+        PlayerPrefs.SetInt("Audio", value ? 0 : 1);
 
         m_audioSources.RemoveAll(source => source == null);
 
         foreach (var source in m_audioSources)
-            source.volume = value ? 1f : 0f;
+            source.volume = value ? 0f : 1f;
 
         if (m_backgroundMusicSource != null)
-            m_backgroundMusicSource.volume = value ? 0.15f : 0f;
+            m_backgroundMusicSource.volume = value ? 0f : 0.15f;
     }
 }

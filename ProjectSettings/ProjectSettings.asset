@@ -156,10 +156,10 @@ PlayerSettings:
   hdrBitDepth: 0
   m_ColorGamuts: 00000000
   targetPixelDensity: 30
-  resolutionScalingMode: 0
-  resetResolutionOnWindowResize: 0
-  androidSupportedAspectRatio: 1
-  androidMaxAspectRatio: 2.1
+  resolutionScalingMode: 2
+  resetResolutionOnWindowResize: 1
+  androidSupportedAspectRatio: 2
+  androidMaxAspectRatio: 1.88
   applicationIdentifier:
     Android: com.SaschaLedermann.PongReloaded
   buildNumber:
@@ -294,7 +294,7 @@ PlayerSettings:
   - m_BuildTarget: Android
     m_Icons:
     - m_Textures:
-      - {fileID: 2800000, guid: c2264070ff53fd44f835ff34f6cc1a91, type: 3}
+      - {fileID: 0}
       m_Width: 192
       m_Height: 192
       m_Kind: 0
@@ -366,14 +366,14 @@ PlayerSettings:
       m_Kind: 1
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: a54f52d34cfed7d4a99094ba4d8e3cd6, type: 3}
+      - {fileID: 2800000, guid: aae15911b9641b5429493f8d18261bfe, type: 3}
       - {fileID: 2800000, guid: cfb5e9db05603604e8580939ac3c531b, type: 3}
       m_Width: 432
       m_Height: 432
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: a54f52d34cfed7d4a99094ba4d8e3cd6, type: 3}
+      - {fileID: 0}
       - {fileID: 2800000, guid: cfb5e9db05603604e8580939ac3c531b, type: 3}
       m_Width: 324
       m_Height: 324

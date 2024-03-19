@@ -10,6 +10,7 @@ public class PlayerInputAndroid : MonoBehaviour, IPaddleInput
     bool m_doBoostShot;
     public bool DoBoostShot { get => m_doBoostShot; }
     float m_charge = 0;
+    [SerializeField] ParticleSystem m_chargeParticles;
 
     void Start() => m_mainCamera = Camera.main;
 
@@ -23,24 +24,39 @@ public class PlayerInputAndroid : MonoBehaviour, IPaddleInput
             {
                 var touch = Input.GetTouch(0);
                 var worldPos = m_mainCamera.ScreenToWorldPoint(touch.position);
-                if (Mathf.Abs(worldPos.x - transform.position.x) > 0.1f)
+                if (Mathf.Abs(worldPos.x - transform.position.x) > 1f)
                     m_input.x = (worldPos.x < transform.position.x ? -1f : 1f) * PaddleSettings.Speed;
 
                 if (touch.phase == TouchPhase.Stationary)
                     m_charge += Time.deltaTime;
+
+                if (m_charge > 1f)
+                    ToggleCharge(true);
+
+                if (touch.phase == TouchPhase.Ended &&
+                    m_charge > 1f)
+                    StartCoroutine(PowerShotRoutine());
             }
         }
+    }
+
+    public void ToggleCharge(bool value)
+    {
+        if (m_chargeParticles == null) return;
+        if (PaddleSettings.Boost == Boost.None) return;
+        if (value && m_chargeParticles.isPlaying) return;
+
+        if (value)
+            m_chargeParticles.Play();
         else
-        {
-            if (m_charge > 1f && !m_doBoostShot)
-                StartCoroutine(PowerShotRoutine());
-            m_charge = 0;
-        }
+            m_chargeParticles.Stop();
     }
 
     IEnumerator PowerShotRoutine()
     {
         m_doBoostShot = true;
+        m_charge = 0f;
+        ToggleCharge(false);
         yield return new WaitForSeconds(0.5f);
         m_doBoostShot = false;
     }

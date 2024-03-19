@@ -15,13 +15,13 @@ public class OrthographicCamera : MonoBehaviour
 
     void Start()
     {
-        var (center, size) = CalculateOrthosize();
+        var (center, size) = CalculateOrthoSize();
 
         m_camera.transform.position = center;
         m_camera.orthographicSize = size;
     }
 
-    (Vector3 center, float size) CalculateOrthosize()
+    (Vector3 center, float size) CalculateOrthoSize()
     {
         var bounds = new Bounds();
 
@@ -30,8 +30,6 @@ public class OrthographicCamera : MonoBehaviour
             if (col.CompareTag("Top Goal") || col.CompareTag("Bottom Goal")) continue;
             bounds.Encapsulate(col.bounds);
         }
-
-        bounds.Expand(-1);
 
         var vertical = bounds.size.y;
         var horizontal = bounds.size.x * m_camera.pixelHeight / m_camera.pixelWidth;
