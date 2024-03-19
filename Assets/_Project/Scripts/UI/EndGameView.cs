@@ -56,7 +56,7 @@ public class EndGameView : MonoBehaviour
         m_quitButton.onClick.AddListener(() =>
         {
             GameManager.Instance.TogglePause();
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("Main");
         });
         m_quitButton.onClick.AddListener(() =>
         {
