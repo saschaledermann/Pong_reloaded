@@ -8,11 +8,13 @@ public class ComputerInput : MonoBehaviour, IPaddleInput
     PaddleSettings m_paddleSettings;
     public PaddleSettings PaddleSettings { get => m_paddleSettings; set => m_paddleSettings = value; }
     int m_bounceCounter;
+    [SerializeField] ParticleSystem m_chargeParticles;
     public bool DoBoostShot 
     { 
         get
         {
             m_bounceCounter++;
+            ToggleCharge(m_bounceCounter % 5 == 3);
             return m_bounceCounter % 5 == 4;
         }
     }
@@ -35,5 +37,23 @@ public class ComputerInput : MonoBehaviour, IPaddleInput
             m_input = Vector2.zero;
         m_input.x *= PaddleSettings.Speed;
         return m_input;
+    }
+
+    public void ToggleCharge(bool value)
+    {
+        if (m_chargeParticles == null) return;
+        if (PaddleSettings.Boost == Boost.None) return;
+        if (value && m_chargeParticles.isPlaying) return;
+
+        if (value)
+            m_chargeParticles.Play();
+        else
+            m_chargeParticles.Stop();
+    }
+
+    public void Reset()
+    {
+        m_bounceCounter = 0;
+        ToggleCharge(false);
     }
 }

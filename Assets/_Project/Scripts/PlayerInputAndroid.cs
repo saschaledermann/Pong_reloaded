@@ -62,4 +62,9 @@ public class PlayerInputAndroid : MonoBehaviour, IPaddleInput
     }
 
     public Vector2 GetInput() => m_input;
+
+    public void Reset()
+    {
+        m_charge = 0f;
+    }
 }

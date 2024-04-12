@@ -33,4 +33,9 @@ public class PlayerInput : MonoBehaviour, IPaddleInput
     }
 
     public Vector2 GetInput() => m_input;
+
+    public void Reset()
+    {
+        throw new System.NotImplementedException();
+    }
 }

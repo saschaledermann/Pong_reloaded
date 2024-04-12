@@ -45,8 +45,8 @@ public class Ball : MonoBehaviour
     {
         var paddle = col.gameObject.GetComponent<Paddle>();
         ApplyBoost(paddle);
-        GetBoost(paddle);
-        PlayAudioClip(true, paddle.IsBoostShot(out var boost) && boost != Boost.None);
+        var isBoost = GetBoost(paddle);
+        PlayAudioClip(true, isBoost);
 
         var paddlePos = col.transform.position;
         float x;
@@ -88,7 +88,7 @@ public class Ball : MonoBehaviour
         m_boost = Boost.None;
     }
 
-    void GetBoost(Paddle paddle)
+    bool GetBoost(Paddle paddle)
     {
         if (paddle.IsBoostShot(out var boost))
         {
@@ -96,21 +96,22 @@ public class Ball : MonoBehaviour
             switch (m_boost)
             {
                 case Boost.None:
-                    break;
+                    return false;
                 case Boost.Angle:
                     paddle.DoBoostParticles();
-                    break;
+                    return true;
                 case Boost.Stun:
                     paddle.DoBoostParticles();
-                    break;
+                    return true;
                 case Boost.Power:
                     paddle.DoBoostParticles();
                     m_speedBoost = 2;
-                    break;
+                    return true;
                 default:
                     throw new NotImplementedException();
             }
         }
+        return false;
     }
 
     public void Reset()

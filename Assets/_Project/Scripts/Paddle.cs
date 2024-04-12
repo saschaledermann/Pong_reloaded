@@ -66,6 +66,7 @@ public class Paddle : MonoBehaviour
     {
         HasEffect = false;
         transform.position = new Vector2(0, transform.position.y);
+        m_inputController.Reset();
     }
 
     public bool IsBoostShot(out Boost boost)
